@@ -1318,7 +1318,7 @@ class WeekView @JvmOverloads constructor(
      */
     @PublicApi
     val firstVisibleHour: Double
-        get() = (viewState.currentOrigin.y * -1 / viewState.hourHeight).toDouble()
+        get() = minHour + (viewState.currentOrigin.y * -1 / viewState.hourHeight).toDouble()
 
     /*
      ***********************************************************************************************
