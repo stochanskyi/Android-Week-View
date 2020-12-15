@@ -376,6 +376,17 @@ class WeekView @JvmOverloads constructor(
         }
 
     /**
+     * Returns whether 00:00 hour of day is included
+     */
+    @PublicApi
+    var showMidnightHour: Boolean
+        get() = viewState.showMidnightHour
+        set(value) {
+            viewState.showMidnightHour = value
+            invalidate()
+        }
+
+    /**
      * Returns the interval in which time labels are displayed in the time column.
      */
     @PublicApi
