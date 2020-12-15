@@ -146,7 +146,7 @@ internal class ViewState {
         get() = (viewWidth - timeColumnWidth) / numberOfVisibleDays
 
     val drawableDayWidth: Float
-        get() = dayWidth - columnGap
+        get() = dayWidth
 
     val dayBackgroundPaint = Paint()
 
