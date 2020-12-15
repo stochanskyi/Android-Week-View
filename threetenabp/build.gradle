@@ -1,5 +1,5 @@
 group = 'com.github.thellmund.Android-Week-View'
-version = '6.0.0'
+version = lib_version
 
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.android.library'
