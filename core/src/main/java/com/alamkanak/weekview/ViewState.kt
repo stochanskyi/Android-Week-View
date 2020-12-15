@@ -18,6 +18,8 @@ typealias TimeFormatter = (Int) -> String
 
 internal class ViewState {
 
+    var showHeader: Boolean = false
+
     // View
     var viewWidth: Int = 0
     var viewHeight: Int = 0

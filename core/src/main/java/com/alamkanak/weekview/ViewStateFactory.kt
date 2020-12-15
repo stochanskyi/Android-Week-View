@@ -25,6 +25,8 @@ internal object ViewStateFactory {
         val customTypeface = a.getCustomTypeface()
         viewState.typeface = customTypeface ?: Typeface.DEFAULT
 
+        viewState.showHeader = a.getBoolean(R.styleable.WeekView_showHeader, false)
+
         viewState.timeColumnTextPaint.apply {
             textSize = a.getDimension(R.styleable.WeekView_timeColumnTextSize, context.defaultTextSize)
             color = a.getColor(R.styleable.WeekView_timeColumnTextColor, context.textColorPrimary)

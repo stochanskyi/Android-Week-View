@@ -46,10 +46,14 @@ class WeekView @JvmOverloads constructor(
 
     private val scroller = ValueAnimator()
 
-    private val renderers: List<Renderer> = listOf(
-        TimeColumnRenderer(viewState),
-        CalendarRenderer(viewState, eventChipsCacheProvider),
-        HeaderRenderer(context, viewState, eventChipsCacheProvider, onHeaderHeightChanged = this::invalidate)
+    private val timeColumnRenderer = TimeColumnRenderer(viewState)
+    private val calendarRenderer = CalendarRenderer(viewState, eventChipsCacheProvider)
+    private val headerRenderer = HeaderRenderer(context, viewState, eventChipsCacheProvider, onHeaderHeightChanged = this::invalidate)
+
+    private val renderers: MutableSet<Renderer> = mutableSetOf(
+        timeColumnRenderer,
+        calendarRenderer,
+        headerRenderer
     )
 
     init {
@@ -78,7 +82,13 @@ class WeekView @JvmOverloads constructor(
         updateDataHolders()
         notifyScrollListeners()
         refreshEvents()
+        resolveRenderers()
         performRendering(canvas)
+    }
+
+    private fun resolveRenderers() {
+        if (viewState.showHeader) renderers.add(headerRenderer)
+        else renderers.remove(headerRenderer)
     }
 
     private fun performPendingScrolls() {
@@ -169,6 +179,14 @@ class WeekView @JvmOverloads constructor(
      *
      ***********************************************************************************************
      */
+
+    @PublicApi
+    var showDayHeader: Boolean
+        get() = viewState.showHeader
+        set(value) {
+            viewState.showHeader = value
+            invalidate()
+        }
 
     /**
      * Returns the number of visible days.
