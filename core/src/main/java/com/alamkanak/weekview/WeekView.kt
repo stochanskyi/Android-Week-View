@@ -13,7 +13,7 @@ import android.view.View
 import android.view.accessibility.AccessibilityManager
 import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
-import java.util.Calendar
+import java.util.*
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -179,6 +179,11 @@ class WeekView @JvmOverloads constructor(
      *
      ***********************************************************************************************
      */
+
+    @PublicApi
+    fun setScrollFinishedListener(listener: (Calendar) -> Unit) {
+        viewState.scrollFinishedListener = listener
+    }
 
     @PublicApi
     var showDayHeader: Boolean
@@ -372,6 +377,17 @@ class WeekView @JvmOverloads constructor(
         get() = viewState.showTimeColumnHourSeparators
         set(value) {
             viewState.showTimeColumnHourSeparators = value
+            invalidate()
+        }
+
+    /**
+     * Returns whether 00:00 hour of day is included
+     */
+    @PublicApi
+    var showMidnightHour: Boolean
+        get() = viewState.showMidnightHour
+        set(value) {
+            viewState.showMidnightHour = value
             invalidate()
         }
 
@@ -1236,9 +1252,10 @@ class WeekView @JvmOverloads constructor(
         message = "This method will be removed in a future release. Use scrollToDate() instead.",
         replaceWith = ReplaceWith(expression = "scrollToDate")
     )
+
     @PublicApi
     fun goToDate(date: Calendar) {
-        scrollToDateWithCompletion(date)
+        scrollToDateWithCompletion(date) { viewState.scrollFinishedListener?.let { it(viewState.firstVisibleDate) } }
     }
 
     private fun scrollToDateWithCompletion(date: Calendar, onComplete: () -> Unit = {}) {

@@ -18,6 +18,8 @@ typealias TimeFormatter = (Int) -> String
 
 internal class ViewState {
 
+    var scrollFinishedListener: ((Calendar) -> Unit)? = null
+
     var showHeader: Boolean = false
 
     // View
@@ -78,6 +80,7 @@ internal class ViewState {
     var showDaySeparators: Boolean = false
     var showTimeColumnSeparator: Boolean = false
     var showTimeColumnHourSeparators: Boolean = false
+    var showMidnightHour: Boolean = false
     var showHeaderBottomLine: Boolean = false
     var showHeaderBottomShadow: Boolean = false
 
