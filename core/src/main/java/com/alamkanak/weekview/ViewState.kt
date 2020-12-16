@@ -18,6 +18,8 @@ typealias TimeFormatter = (Int) -> String
 
 internal class ViewState {
 
+    var scrollFinishedListener: ((Calendar) -> Unit)? = null
+
     var showHeader: Boolean = false
 
     // View
